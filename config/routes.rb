@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
-  get 'welcome/index'
+  resources :password_resets
+
+  get 'welcome/index', as: :welcome
+  get 'login' => 'welcome#new', :as => :login
+  get 'logout' => 'welcome#destroy', :as => :logout
+  post 'try_login' => 'welcome#create', :as => :try_login
   root 'welcome#index'
 
-  resources :users
+  resources :users do
+    member do
+      get :activate
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
